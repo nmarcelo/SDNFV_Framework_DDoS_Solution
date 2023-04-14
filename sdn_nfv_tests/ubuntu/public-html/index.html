@@ -1,0 +1,668 @@
+<HTML>
+
+<HEAD>
+
+<TITLE>Tecnologico de Monterrey</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF">
+
+<CENTER><IMG SRC="logo-tec.jpg" ALIGN="BOTTOM"> </CENTER>
+
+<HR>
+
+<a href="http://somegreatsite.com">Link to SDN tutorials</a>
+
+where you will find helpful information of implementation.
+
+<H1>Project of security automation in SDN</H1>
+
+<H2>Project leader Noe Marcelo Y</H2>
+
+Send me mail at <a href="mailto:support@yourcompany.com">
+
+support@yourcompany.com</a>.
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+Openflow has a particular way of establishing a connection between two hosts that want to communicate through the network. Each packet and connection through the switch generates a new flow, these flows are saved directly on the flow table of every switch. Every openflow switch flow table is managed by the controller. The controller is in charge of validating new flows and acting upon every new flow message from the switches. There are several steps starting from the moment where the packet enters the openflow switch. The steps in order are the following:
+<P>
+
+<P>
+OpenFlow es un protocolo que permite a un servidor decirle a los conmutadores de red adónde enviar paquetes. En una red convencional, cada conmutador tiene software propietario que le dice qué hacer.  Con OpenFlow se centralizan las decisiones de migración de paquetes, de modo que la red se puede programar independiente de los conmutadores individuales y equipo del centro de datos.
+<P>
+
+<P>
+En un conmutador convencional, la transferencia de paquetes (la trayectoria de datos) y el enrutamiento de alto nivel (la trayectoria de control) suceden en el mismo dispositivo.  Un conmutador OpenFlow separa la trayectoria de datos de la trayectoria de control.  La porción de trayectoria de datos reside en el propio conmutador; un controlador separado toma las decisiones de enrutamiento de alto nivel.  El conmutador y el controlador se comunican por medio del protocolo de OpenFlow.  Esta metodología, conocida red definida por software (SDN, por sus siglas en inglés), permite un uso más efectivo de los recurso de la red que el que es posible con redes tradicionales.  Ha aumentado la preferencia por OpenFlow en aplicaciones como movilidad de máquina virtual (VM), redes críticas para la misión y redes móviles basadas en IP de nueva generación.
+<P>
+
+<P>
+Muchas empresas establecidas incluyendo IBM, Google y HP han utilizado completamente o han anunciado su intención de soportar el estándar de OpenFlow. Big Switch Networks, una compañía de SDN con sede en Palo Alto, California, ha implementado redes de OpenFlow que funcionan sobre redes tradicionales, lo que hace posible colocar máquinas virtuales en cualquier lado dentro de un centro de datos para recuperar capacidad computación varada.  Para principios de 2012, la red interna de Google funcionaba completamente con OpenFlow.
+<P>
+
+<P>
+Open Network Operating System (ONOS®) is the leading open source SDN controller for building next-generation SDN/NFV solutions.
+ONOS was designed to meet the needs of operators wishing to build carrier-grade solutions that leverage the economics of white box merchant silicon hardware while offering the flexibility to create and deploy new dynamic network services with simplified programmatic interfaces. ONOS supports both configuration and real-time control of the network, eliminating the need to run routing and switching control protocols inside the network fabric. By moving intelligence into the ONOS cloud controller, innovation is enabled and end-users can easily create new network applications without the need to alter the dataplane systems. The ONOS platform includes: A platform and a set of applications that act as an extensible, modular, distributed SDN controller.
+Simplified management, configuration and deployment of new software, hardware & services.
+A scale-out architecture to provide the resiliency and scalability required to meet the rigors of production carrier environments.
+<P>
+
+<P> SDN (Software Defined Networking) is the most recent networking paradigm in which the control plane is transferred to one device in order to achieve a faster and easier way to configure and scale networks, leaving the rest of the devices as data plane devices. In order to illustrate this scheme a router is the perfect example. This device includes the routing table that represents the control plane and the actual packet transferring that represents data plane. An advantage of a centralized control plane is that it´s simple to configure every data plane device distributed through the network from just one central device (a SDN controller) by programming the network beyond operating system restrictions. Thus the name Software Defined Network.
+<P> 
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+<P>
+An SDN architecture consists of a network controller and openflow switches (slaves). These openflow switches are directly connected to the controller and connected to each other as the network topology requires. The controller and switches communicate using the openflow protocol messages in order to propagate the configuration to the network. As a side note: from now on we will not use a router terminology as the openflow switches are L3 switches. All the routing and switching is done by the same device using the flow table and directions from the controller. Hardware wise the SDN controller is a web server with RESTful services for communication and the openflow switches can be normal switches with openflow plugin
+<P>
+
+<P>
+SDN uses the openflow protocol as the base of communication between the controller and the openflow switches. This protocol is extensive and enables most of the functions a programmable controller can have. In order to know how to use a controller the first thing is to understand what is a flow and how are flows defined by the openflow protocol. This section also defines a normal transaction between the controller and openflow switches in order to deliver network packages.
+<P>
+
+
+<B>The results of the project widely shown the good performance of our project</B>
+
+<BR> <B><I>Future work involve the application of the proposed framework to IoT </I></B>
+
+<HR>
+
+</BODY>
+
+</HTML>
+

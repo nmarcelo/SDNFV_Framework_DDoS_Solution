@@ -1,0 +1,14 @@
+FROM httpd:2.4
+COPY ./public-html/ /usr/local/apache2/htdocs/
+COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
+
+# Install dependencies required for Containernet.
+RUN apt-get update && apt-get install -y \
+    net-tools \
+    iputils-ping \
+    iproute2 \
+    build-essential \
+    htop \
+    apache2 \
+    wget\
+    systemctl
