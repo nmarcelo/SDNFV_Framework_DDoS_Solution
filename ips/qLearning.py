@@ -37,7 +37,7 @@ conns_testing = [["00:00:00:00:00:%s" % f"{n:02X}" ,   "00:00:00:00:00:FA"] for 
 # for stress testing: Pending threads management
 #
 original_server = "00:00:00:00:00:FA"
-shadow_servers = ["00:00:00:00:00:FB",   "00:00:00:00:00:FC"]
+shadow_servers = ["00:00:00:00:00:FB",   "00:00:00:00:00:FC",  "00:00:00:00:00:FD"]
 
 
 from agentq import *

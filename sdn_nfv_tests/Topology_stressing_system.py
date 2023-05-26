@@ -172,9 +172,9 @@ if __name__ == '__main__':
     CLI(net) 
 
     # Simulation parameters
-    sim_time = 700   # simulation time in seconds
-    att_time = 50    # time when the attack starts 
-    att_duration=400 # duration of the attack
+    sim_time = 500   # simulation time in seconds
+    att_time = 100    # time when the attack starts 
+    att_duration=300 # duration of the attack
 
     # Traffic simulation
     print ('Topology ready')
@@ -189,8 +189,15 @@ if __name__ == '__main__':
     
 
     print ('Starting attack traffic')
-    ha = [net.get('h%d' % i) for i in range(31,46)] 
-    pa =[ha[i].popen('slowhttptest -c 10000 -X -r 100 -w 1 -y 1 -n 1 -z 5 -u http://10.0.0.250/ -p 5 -l %s' %str(att_duration)) for i in range(len(ha))]
+    ha = [net.get('h%d' % i) for i in range(31,33)] 
+    pa =[ha[i].popen('slowhttptest -c 10000 -X -r 30 -w 1 -y 1 -n 1 -z 5 -u http://10.0.0.250/ -p 5 -l %s' %str(att_duration)) for i in range(len(ha))]
+    
+    ha = [net.get('h%d' % i) for i in range(36,38)] 
+    pa =[ha[i].popen('slowhttptest -c 10000 -X -r 30 -w 1 -y 1 -n 1 -z 5 -u http://10.0.0.250/ -p 5 -l %s' %str(att_duration)) for i in range(len(ha))]
+
+    ha = [net.get('h%d' % i) for i in range(41,43)] 
+    pa =[ha[i].popen('slowhttptest -c 10000 -X -r 30 -w 1 -y 1 -n 1 -z 5 -u http://10.0.0.250/ -p 5 -l %s' %str(att_duration)) for i in range(len(ha))]
+    
     print ('Ready attack traffic')
     saving_time_experiment('Time_Start_Attack_Traffic')
 
