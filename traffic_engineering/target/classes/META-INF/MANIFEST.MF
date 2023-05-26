@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1657241266270
+Bnd-LastModified: 1684964464074
 Build-Jdk: 11.0.7
 Built-By: root
 Bundle-ClassPath: WEB-INF/classes
@@ -12,8 +12,9 @@ Created-By: Apache Maven Bundle Plugin
 Export-Package: org.itesm.linkDelay.intf;uses:="org.onosproject.net";ver
  sion="1.0.0",org.itesm.resetConnection.intf;uses:="org.onosproject.net"
  ;version="1.0.0",org.itesm.trafficEngineering;uses:="com.fasterxml.jack
- son.annotation,javax.ws.rs,javax.ws.rs.core,org.onlab.rest,org.onosproj
- ect.net,org.onosproject.rest";version="1.0.0"
+ son.annotation,javax.ws.rs,javax.ws.rs.core,org.onlab.graph,org.onlab.r
+ est,org.onosproject.net,org.onosproject.net.topology,org.onosproject.re
+ st";version="1.0.0"
 Import-Package: com.fasterxml.jackson.annotation;version="[2.8,3)",com.f
  asterxml.jackson.databind;version="[2.5,3)",com.fasterxml.jackson.datab
  ind.node;version="[2.5,3)",com.google.common.base;version="[22.0,23)",j

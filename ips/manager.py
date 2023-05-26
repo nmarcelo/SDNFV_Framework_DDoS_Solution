@@ -11,6 +11,7 @@ import pandas as pd
 import random
 import operator
 
+
 class TopoManager(object):
     
     def __init__(self):

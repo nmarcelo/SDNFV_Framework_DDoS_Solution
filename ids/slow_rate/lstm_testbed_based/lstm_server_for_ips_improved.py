@@ -104,7 +104,7 @@ def evaluating(ipsource, macsource, ipdestination,macdestination, sourcePort, ds
 
 def saving_action_IPS(ipsource, ipdestination,action,start_experiment):
     with open(file1,"a") as f:
-        elapsed = time.time() - start_experiment.value
+        elapsed = time.time()
         f.write(str(ipsource)+','+str(ipdestination)+ ','+str(action)+','+str(elapsed)+'\n')
     return 0
 

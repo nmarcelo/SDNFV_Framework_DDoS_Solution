@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1657241359661
+Bnd-LastModified: 1684963606313
 Build-Jdk: 11.0.7
 Built-By: root
 Bundle-Description: Reactive forwarding  for ONOS
@@ -9,24 +9,25 @@ Bundle-Name: reactiveFwd
 Bundle-SymbolicName: mx.itesm.reactiveFwd.reactiveFwd
 Bundle-Version: 1.0.0.SNAPSHOT
 Created-By: Apache Maven Bundle Plugin
-Export-Package: mx.itesm.reactiveFwd;uses:="org.onlab.packet,org.onospro
- ject.cfg,org.onosproject.core,org.onosproject.net.flow,org.onosproject.
- net.flowobjective,org.onosproject.net.host,org.onosproject.net.intent,o
- rg.onosproject.net.packet,org.onosproject.net.topology,org.onosproject.
- store.service,org.osgi.service.component";version="1.0.0"
+Export-Package: mx.itesm.reactiveFwd;uses:="org.onlab.graph,org.onlab.pa
+ cket,org.onosproject.cfg,org.onosproject.core,org.onosproject.net,org.o
+ nosproject.net.flow,org.onosproject.net.flowobjective,org.onosproject.n
+ et.host,org.onosproject.net.intent,org.onosproject.net.link,org.onospro
+ ject.net.packet,org.onosproject.net.topology,org.onosproject.store.serv
+ ice,org.osgi.service.component";version="1.0.0"
 Import-Package: com.google.common.base;version="[22.0,23)",com.google.co
- mmon.collect;version="[22.0,23)",org.onlab.packet;version="[2.2,3)",org
- .onlab.util;version="[2.2,3)",org.onosproject.cfg;version="[2.2,3)",org
- .onosproject.core;version="[2.2,3)",org.onosproject.event;version="[2.2
- ,3)",org.onosproject.net;version="[2.2,3)",org.onosproject.net.flow;ver
- sion="[2.2,3)",org.onosproject.net.flow.criteria;version="[2.2,3)",org.
- onosproject.net.flow.instructions;version="[2.2,3)",org.onosproject.net
- .flowobjective;version="[2.2,3)",org.onosproject.net.host;version="[2.2
- ,3)",org.onosproject.net.intent;version="[2.2,3)",org.onosproject.net.l
- ink;version="[2.2,3)",org.onosproject.net.packet;version="[2.2,3)",org.
- onosproject.net.topology;version="[2.2,3)",org.onosproject.store.servic
- e;version="[2.2,3)",org.osgi.service.component;version="[1.4,2)",org.sl
- f4j;version="[1.7,2)"
+ mmon.collect;version="[22.0,23)",org.onlab.graph;version="[2.2,3)",org.
+ onlab.packet;version="[2.2,3)",org.onlab.util;version="[2.2,3)",org.ono
+ sproject.cfg;version="[2.2,3)",org.onosproject.core;version="[2.2,3)",o
+ rg.onosproject.event;version="[2.2,3)",org.onosproject.net;version="[2.
+ 2,3)",org.onosproject.net.flow;version="[2.2,3)",org.onosproject.net.fl
+ ow.criteria;version="[2.2,3)",org.onosproject.net.flow.instructions;ver
+ sion="[2.2,3)",org.onosproject.net.flowobjective;version="[2.2,3)",org.
+ onosproject.net.host;version="[2.2,3)",org.onosproject.net.intent;versi
+ on="[2.2,3)",org.onosproject.net.link;version="[2.2,3)",org.onosproject
+ .net.packet;version="[2.2,3)",org.onosproject.net.topology;version="[2.
+ 2,3)",org.onosproject.store.service;version="[2.2,3)",org.osgi.service.
+ component;version="[1.4,2)",org.slf4j;version="[1.7,2)"
 Require-Capability: osgi.service;filter:="(objectClass=org.onosproject.c
  fg.ComponentConfigService)";effective:=active,osgi.service;filter:="(ob
  jectClass=org.onosproject.core.CoreService)";effective:=active,osgi.ser
@@ -36,11 +37,12 @@ Require-Capability: osgi.service;filter:="(objectClass=org.onosproject.c
  lter:="(objectClass=org.onosproject.net.host.HostService)";effective:=a
  ctive,osgi.service;filter:="(objectClass=org.onosproject.net.intent.Int
  entService)";effective:=active,osgi.service;filter:="(objectClass=org.o
- nosproject.net.packet.PacketService)";effective:=active,osgi.service;fi
- lter:="(objectClass=org.onosproject.net.topology.TopologyService)";effe
- ctive:=active,osgi.service;filter:="(objectClass=org.onosproject.store.
- service.StorageService)";effective:=active,osgi.extender;filter:="(&(os
- gi.extender=osgi.component)(version>=1.4.0)(!(version>=2.0.0)))",osgi.e
- e;filter:="(&(osgi.ee=JavaSE)(version=11))"
+ nosproject.net.link.LinkService)";effective:=active,osgi.service;filter
+ :="(objectClass=org.onosproject.net.packet.PacketService)";effective:=a
+ ctive,osgi.service;filter:="(objectClass=org.onosproject.net.topology.T
+ opologyService)";effective:=active,osgi.service;filter:="(objectClass=o
+ rg.onosproject.store.service.StorageService)";effective:=active,osgi.ex
+ tender;filter:="(&(osgi.extender=osgi.component)(version>=1.4.0)(!(vers
+ ion>=2.0.0)))",osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=11))"
 Service-Component: OSGI-INF/mx.itesm.reactiveFwd.reactiveFwd.xml
 Tool: Bnd-4.1.0.201810181252

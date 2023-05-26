@@ -2,6 +2,7 @@ org/itesm/trafficEngineering/Route.class
 org/itesm/linkDelay/impl/LinkQualityManager$1.class
 org/itesm/resetConnection/intf/ResetConnectionService.class
 org/itesm/resetConnection/impl/ResetConnection.class
+org/itesm/trafficEngineering/TrafficEngineeringResource$SRLinkWeigher.class
 org/itesm/linkDelay/impl/OsgiPropertyConstants.class
 org/itesm/trafficEngineering/TrafficEngineeringApplication.class
 org/itesm/linkDelay/impl/LinkQualityManager$LinkProbeReceiver.class

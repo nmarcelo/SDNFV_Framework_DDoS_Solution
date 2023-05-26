@@ -15,6 +15,8 @@ from mininet.util import dumpNodeConnections
 
 REMOTE_CONTROLLER_IP = '172.17.0.2'
 
+file1 = "/home/marcelo/Documents/FlowCollectionDataset/TimeExperiment.txt"
+
 class CustomTopo(Topo):
     def __init__(self, **opts):
         super(CustomTopo, self).__init__(**opts)
@@ -61,7 +63,12 @@ class CustomTopo(Topo):
 
         #[self.addLink(ssw[indx], h[indx], bw = leaf_bw) for indx in range(0,6)] # 
 
-        
+ 
+def saving_time_experiment(message):
+    with open(file1,"a") as f:
+        elapsed = time.time()
+        f.write(message+'='+str(elapsed)+'\n')
+    return 0       
 
 if __name__ == '__main__':
     net = Containernet(topo=CustomTopo(),
@@ -103,17 +110,39 @@ if __name__ == '__main__':
     h252.popen('systemctl restart apache2')
     h252.popen('iperf -s')
 
+    CLI(net) 
 
-    #net.addLink(ssw[0], server, bw = leaf_bw)
-        
-    #hnr = [net.get('h%d' % i) for i in range(1,4)]
-    #pnr = [hnr[i].popen('iperf -s') for i in range(len(hnr))]
+    # Simulation parameters
+    sim_time = 500   # simulation time in seconds
+    att_time = 100    # time when the attack starts 
+    att_duration=300 # duration of the attack
 
-    # clients
+    # Traffic simulation
+    print ('Topology ready')
+    # legitimate
+    print ('Starting legitimate traffic')
+    hnr = [net.get('h%d' % i) for i in range(1,3)]
+    pnr = [hnr[i].popen('iperf -c 10.0.0.250 -t %s -b 1K' %str(sim_time)) for i in range(len(hnr))]
+    saving_time_experiment('Time_Start_Legitimate_Traffic')
+    print ('Ready legitimate traffic')
+    # attackers
+    time.sleep(att_time)     # delay until the attacks start 
+    
 
-    #hns = [net.get('h%d' % i) for i in range(4,7)]
-    #pns = [hns[i].popen('iperf -c 10.0.0.%s -t 800 -b 1M' % str(i+1)) for i in range(len(hns))]
+    print ('Starting attack traffic')
+    ha = [net.get('h%d' % i) for i in range(3,5)] 
+    pa =[ha[i].popen('slowhttptest -c 10000 -X -r 300 -w 1 -y 1 -n 1 -z 5 -u http://10.0.0.250/ -p 5 -l %s' %str(att_duration)) for i in range(len(ha))]
+    print ('Ready attack traffic')
+    saving_time_experiment('Time_Start_Attack_Traffic')
 
+    time.sleep(att_duration) 
+    saving_time_experiment('Time_End_Attack_Traffic')
+
+    time.sleep(sim_time-att_time-att_duration)
+    saving_time_experiment('Time_End_Legitimate_Traffic')
+    print('End simulation')
+
+    # Enabe CLI 
     CLI(net)    
     net.stop()
 

@@ -34,13 +34,8 @@ class AgentQ:
 
     def set_epsilon_simulated_annealing(self, step, initial_epsilon):
         Temperature = 10
-        if self.epsilon > 0.10:
+        if (initial_epsilon)*np.exp(-step/Temperature) > 0.10:
             self.epsilon = (initial_epsilon)*np.exp(-step/Temperature)
-
-    def calculate_epsilon(self, episode):
-        Temperature = 10
-        if self.epsilon > 0.05:
-            return (0.6)*np.exp(-episode/Temperature) # 0.6 is the initial epsilon
 
     def get_random_action(self):
         return randrange(self._action_size) 

@@ -61,6 +61,16 @@ import java.util.List;
 import java.util.Map;  
 import java.util.Set;  
 
+/**
+ * Link weighter
+ */
+import org.onlab.graph.DefaultEdgeWeigher;
+import org.onlab.graph.ScalarWeight;
+import org.onlab.graph.Weight;
+import org.onosproject.net.topology.LinkWeigher;
+import org.onosproject.net.topology.TopologyEdge;
+import org.onosproject.net.topology.TopologyVertex;
+import java.lang.Iterable;
 
 
 /**
@@ -1210,6 +1220,8 @@ public class TrafficEngineeringResource extends AbstractWebResource {
         TopologyService topologyService = get(TopologyService.class);
 
         HostService hostService = get(HostService.class);
+        
+        LinkService linkService = get(LinkService.class);
 
         DeviceId deviceId_attacker = hostService.getHost(attackerHost.id()).location().deviceId();
         DeviceId deviceId_shadowServer = hostService.getHost(shadowserverHost.id()).location().deviceId();
@@ -1220,10 +1232,11 @@ public class TrafficEngineeringResource extends AbstractWebResource {
 
         // Get a set of paths that lead from here to the destination edge switch.
 
+        LinkWeigher linkWeigher = new SRLinkWeigher(linkService.getActiveLinks());
         Set<org.onosproject.net.Path> paths =
                     topologyService.getPaths(topologyService.currentTopology(),
                                              deviceId_attacker,
-                                             deviceId_shadowServer);
+                                             deviceId_shadowServer,linkWeigher);
         if (paths.isEmpty()) {
             // If there are no paths, flood and bail.
             return false;
@@ -1247,9 +1260,12 @@ public class TrafficEngineeringResource extends AbstractWebResource {
         // Install rule in the SHADOW SERVER DEVICE
 
         // Get a set of paths that lead from here to the destination edge switch.
-        paths = topologyService.getPaths(topologyService.currentTopology(),
+        // Avoid paths that go through the Mirroring SW 
+        paths =
+                topologyService.getPaths(topologyService.currentTopology(),
                                              deviceId_shadowServer,
-                                             deviceId_attacker);
+                                             deviceId_attacker,linkWeigher);
+
         if (paths.isEmpty()) {
             // If there are no paths, flood and bail.
             return false;
@@ -1280,17 +1296,10 @@ public class TrafficEngineeringResource extends AbstractWebResource {
 
     private org.onosproject.net.Path pickForwardPathIfPossible(Set<org.onosproject.net.Path> paths, PortNumber notToPort) {
         org.onosproject.net.Path pathAvailable = null;
-        PortNumber temporal = null;
+        int count = 0;
         for (org.onosproject.net.Path path : paths) {
-            Boolean includeMirrorDevice = false;
-            for (Link link:path.links()){
-                if (link.dst().deviceId().equals(mirrorDeviceID)) { // avoid paths that pass to the mirrorring SW
-                    includeMirrorDevice = true;
-                    temporal = link.dst().port();
-                }
-            }
-            if (!path.src().port().equals(notToPort) && !includeMirrorDevice) { // do not return to the same port
-                         pathAvailable = path;
+            if (!path.src().port().equals(notToPort)) { // do not return to the same port
+                         return path;
             }
         }
         return pathAvailable;
@@ -1453,5 +1462,43 @@ public class TrafficEngineeringResource extends AbstractWebResource {
            flowObjectiveService.forward(link.src().deviceId(),
                                          forwardingObjective);
         }
+    }
+
+
+/**
+ * Link weigher to avoid path through the mirroring device.Adapted from github @charlesmcchan
+ */
+public final class SRLinkWeigher
+        extends DefaultEdgeWeigher<TopologyVertex, TopologyEdge>
+        implements LinkWeigher {
+    private final Iterable<Link> linksToEnforce;
+
+    // Weight for the link to avoid. The high level idea is to build
+    // a constrained shortest path computation. 100 should provide a good
+    // threshold
+    public final ScalarWeight LINK_TO_AVOID_WEIGHT = new ScalarWeight(HOP_WEIGHT_VALUE + 100);
+
+    /**
+     * Creates a SRLinkWeigher object.
+     *
+     * @param srManager SegmentRoutingManager object
+     * @param srcPath the source of the paths
+     * @param linksToEnforce links to be enforced by the path computation
+     */
+    public SRLinkWeigher(Iterable<Link> linksToEnforce) {
+        this.linksToEnforce = linksToEnforce;
+    }
+
+    @Override
+    public Weight weight(TopologyEdge edge) {
+        // If it is the mirror device return infine value
+         DeviceId dstDeviceLink = edge.link().dst().deviceId();
+        if (dstDeviceLink.equals(mirrorDeviceID)) {
+            return ScalarWeight.NON_VIABLE_WEIGHT;
+        }
+        // All other cases we return
+        return new ScalarWeight(HOP_WEIGHT_VALUE);
+    }
+
     }
 }

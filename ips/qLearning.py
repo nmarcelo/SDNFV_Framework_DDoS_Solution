@@ -27,25 +27,17 @@ from dijkstar import find_path
 sys.path.insert(0, '/home/marcelo/Documents/SDNFV_Framework_DDoS_Solution/ids/slow_rate/lstm_testbed_based')
 
 
-#python3 main_deep_reinforcement_ips.py
+#python3 qLearning.py
 
 from lstm_server_for_ips_improved import *
 
-conns_testing = [
-    ["00:00:00:00:00:02"   ,   "00:00:00:00:00:FA"], # Attacker
-    ["00:00:00:00:00:04"   ,   "00:00:00:00:00:FA"], # Attacker
-    ["00:00:00:00:00:01"   ,   "00:00:00:00:00:FA"], # Legitimate
-    ["00:00:00:00:00:03"   ,   "00:00:00:00:00:FA"]  # Legitimate
-    ]
+conns_testing = [["00:00:00:00:00:%s" % f"{n:02X}" ,   "00:00:00:00:00:FA"] for n in range(1,46)]
 
 
 # for stress testing: Pending threads management
 #
 original_server = "00:00:00:00:00:FA"
 shadow_servers = ["00:00:00:00:00:FB",   "00:00:00:00:00:FC"]
-
-#original_server = "00:00:00:00:00:04"
-#shadow_servers = ["00:00:00:00:00:05",   "00:00:00:00:00:06"]
 
 
 from agentq import *
@@ -197,8 +189,6 @@ def QLearning(conn, index, main_state, start_experiment):
 
         # Initialize variables
         terminated = False
-        
-        #initial_epsilon = agent.calculate_epsilon(e)
 
         initial_epsilon = 0.6
         for timestep in range(1, timesteps_per_episode):
@@ -306,6 +296,7 @@ class threading_main(Process): # changed Thread
             # TODO control of threads
             if (controlOFThreats == 1):
                 conns   = itertools.combinations(self.hosts,2)
+
                 indexes = itertools.combinations(range(0,len(self.hosts)),2)
                 for conn, index in zip(conns, indexes):
                     for conn_testing in conns_testing:

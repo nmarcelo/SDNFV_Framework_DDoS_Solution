@@ -147,6 +147,19 @@ import java.util.EnumSet;
 import java.util.Set;
 import com.google.common.collect.Sets;
 
+/**
+ * Link weighter
+ */
+import org.onlab.graph.DefaultEdgeWeigher;
+import org.onlab.graph.ScalarWeight;
+import org.onlab.graph.Weight;
+import org.onosproject.net.topology.LinkWeigher;
+import org.onosproject.net.topology.TopologyEdge;
+import org.onosproject.net.topology.TopologyVertex;
+import java.lang.Iterable;
+import org.onosproject.net.link.LinkService;
+
+
 
 @Component(immediate = true)
 public class reactiveFwd {
@@ -155,6 +168,9 @@ public class reactiveFwd {
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected TopologyService topologyService;
+
+    @Reference(cardinality = ReferenceCardinality.MANDATORY)
+    protected LinkService linkService;
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected PacketService packetService;
@@ -183,11 +199,12 @@ public class reactiveFwd {
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected IntentService intentService;
 
+    private PortNumber mirrorPortNumber = PortNumber.portNumber(1);  
 
+
+    // mirror device
     private static final DeviceId mirrorDeviceID = DeviceId.deviceId("of:0000000000000065");
-    private PortNumber mirrorPortNumber = PortNumber.portNumber(1);  // can change
     private static final PortNumber PktCollectorPortNumber = PortNumber.portNumber(1); // port to which the flow collector is connected to
-    private static final PortNumber testingPort = PortNumber.portNumber(7); // eliminate
 
     private static final EnumSet<IntentState> WITHDRAWN_STATES = EnumSet.of(IntentState.WITHDRAWN,
                                                                             IntentState.WITHDRAWING,
@@ -222,7 +239,8 @@ public class reactiveFwd {
     private boolean matchVlanId = MATCH_VLAN_ID_DEFAULT;
 
     /** Enable matching IPv4 Addresses; default is false. */
-    private boolean matchIpv4Address = MATCH_IPV4_ADDRESS_DEFAULT;
+    private boolean matchIpv4Address = MATCH_IPV4_ADDRESS_DEFAULT; // uncomment for ips
+    //private boolean matchIpv4Address = true; // uncomment for more detailed traffic
 
     /** Enable matching IPv4 DSCP and ECN; default is false. */
     private boolean matchIpv4Dscp = MATCH_IPV4_DSCP_DEFAULT;
@@ -234,7 +252,8 @@ public class reactiveFwd {
     private boolean matchIpv6FlowLabel = MATCH_IPV6_FLOW_LABEL_DEFAULT;
 
     /** Enable matching TCP/UDP ports; default is false. */
-    private boolean matchTcpUdpPorts = MATCH_TCP_UDP_PORTS_DEFAULT;
+    private boolean matchTcpUdpPorts = MATCH_TCP_UDP_PORTS_DEFAULT; // uncomment for ips
+    //private boolean matchTcpUdpPorts = true; // uncomment for more detailed traffic
 
     /** Enable matching ICMPv4 and ICMPv6 fields; default is false. */
     private boolean matchIcmpFields = MATCH_ICMP_FIELDS_DEFAULT;
@@ -559,13 +578,14 @@ public class reactiveFwd {
                 return;
             }
 
-
             // Otherwise, get a set of paths that lead from here to the
             // destination edge switch.
+            // Avoid paths that go through the Mirroring SW 
+            LinkWeigher linkWeigher = new SRLinkWeigher(linkService.getActiveLinks());
             Set<Path> paths =
                     topologyService.getPaths(topologyService.currentTopology(),
                                              pkt.receivedFrom().deviceId(),
-                                             dst.location().deviceId());
+                                             dst.location().deviceId(),linkWeigher);
             if (paths.isEmpty()) {
                 // If there are no paths, flood and bail.
                 flood(context, macMetrics);
@@ -603,21 +623,10 @@ public class reactiveFwd {
     // specified port if possible.
     private Path pickForwardPathIfPossible(Set<Path> paths, PortNumber notToPort) {
         Path pathAvailable = null;
-        PortNumber temporal = null;
+        int count = 0;
         for (Path path : paths) {
-            Boolean includeMirrorDevice = false;
-            for (Link link:path.links()){
-                if (link.dst().deviceId().equals(mirrorDeviceID)) { // avoid paths that pass to the mirrorring SW
-                    includeMirrorDevice = true;
-                    temporal = link.dst().port();
-                }
-            }
-            if (path.dst().deviceId().equals(mirrorDeviceID) && path.links().size()==1){ // get port that connects to the mirroring device
-                //mirrorPortNumber = temporal;
-            }
-
-            if (!path.src().port().equals(notToPort) && !includeMirrorDevice) { // do not return to the same port
-                         pathAvailable = path;
+            if (!path.src().port().equals(notToPort)) { // do not return to the same port
+                         return path;
             }
         }
         return pathAvailable;
@@ -643,7 +652,7 @@ public class reactiveFwd {
 
     // Install a rule forwarding the packet to the specified port.
     private void installRule(PacketContext context, PortNumber portNumber, ReactiveForwardMetrics macMetrics, Boolean isEndDevice) {
-        //
+        // 
         // We don't support (yet) buffer IDs in the Flow Service so
         // packet out first.
         //
@@ -656,19 +665,22 @@ public class reactiveFwd {
             packetOut(context, portNumber, macMetrics);
             return;
         }
-
         //
         // If matchDstMacOnly
         //    Create flows matching dstMac only
         // Else
         //    Create flows with default matching and include configured fields
         //
+        
         if (matchDstMacOnly) {
+            
             selectorBuilder.matchEthDst(inPkt.getDestinationMAC());
         } else {
+
             selectorBuilder.matchInPort(context.inPacket().receivedFrom().port())
                     .matchEthSrc(inPkt.getSourceMAC())
                     .matchEthDst(inPkt.getDestinationMAC());
+
 
             // If configured Match Vlan ID
             if (matchVlanId && inPkt.getVlanID() != Ethernet.VLAN_UNTAGGED) {
@@ -763,7 +775,7 @@ public class reactiveFwd {
 
         TrafficTreatment treatment;
             if (inheritFlowTreatment) {
-                if(isEndDevice){
+                if(isEndDevice){ 
                     treatment = context.treatmentBuilder()
                     .setOutput(portNumber)
                     .setOutput(mirrorPortNumber)
@@ -1036,5 +1048,41 @@ public class reactiveFwd {
         }
     }
 
+/**
+ * Link weigher to avoid path through the mirroring device.Adapted from github @charlesmcchan
+ */
+public final class SRLinkWeigher
+        extends DefaultEdgeWeigher<TopologyVertex, TopologyEdge>
+        implements LinkWeigher {
+    private final Iterable<Link> linksToEnforce;
+
+    // Weight for the link to avoid. The high level idea is to build
+    // a constrained shortest path computation. 100 should provide a good
+    // threshold
+    public final ScalarWeight LINK_TO_AVOID_WEIGHT = new ScalarWeight(HOP_WEIGHT_VALUE + 100);
+
+    /**
+     * Creates a SRLinkWeigher object.
+     *
+     * @param srManager SegmentRoutingManager object
+     * @param srcPath the source of the paths
+     * @param linksToEnforce links to be enforced by the path computation
+     */
+    public SRLinkWeigher(Iterable<Link> linksToEnforce) {
+        this.linksToEnforce = linksToEnforce;
+    }
+
+    @Override
+    public Weight weight(TopologyEdge edge) {
+        // If it is the mirror device return infine value
+         DeviceId dstDeviceLink = edge.link().dst().deviceId();
+        if (dstDeviceLink.equals(mirrorDeviceID)) {
+            return ScalarWeight.NON_VIABLE_WEIGHT;
+        }
+        // All other cases we return
+        return new ScalarWeight(HOP_WEIGHT_VALUE);
+    }
+
+    }
 
 }

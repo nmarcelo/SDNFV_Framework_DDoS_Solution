@@ -1,6 +1,7 @@
-mx/itesm/reactiveFwd/OsgiPropertyConstants.class
 mx/itesm/reactiveFwd/reactiveFwd.class
 mx/itesm/reactiveFwd/reactiveFwd$ReactivePacketProcessor.class
-mx/itesm/reactiveFwd/ReactiveForwardMetrics.class
+mx/itesm/reactiveFwd/reactiveFwd$SRLinkWeigher.class
 mx/itesm/reactiveFwd/reactiveFwd$SrcDstPair.class
+mx/itesm/reactiveFwd/OsgiPropertyConstants.class
+mx/itesm/reactiveFwd/ReactiveForwardMetrics.class
 mx/itesm/reactiveFwd/reactiveFwd$InternalTopologyListener.class

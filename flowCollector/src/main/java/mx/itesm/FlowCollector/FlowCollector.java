@@ -193,22 +193,8 @@ public class FlowCollector {
                 //log.info("=============================================================================");
                 
                 // avoid monitoring host
-                if((newFlow.getValue()).getSrcIP().equals("10.0.2.201")||(newFlow.getValue()).getDstIP().equals("10.0.2.201"))continue; 
-                 // save all attack events
-                if (((newFlow.getValue()).getSrcIP().equals("10.0.2.111")||(newFlow.getValue()).getDstIP().equals("10.0.2.111"))) {
-                    Thread IntrusionDetectionSystemThread = new Thread("IDS") {
-                        public void run () {
-                            try {
-                                Client client = ClientBuilder.newClient();
-                                String response = client.target("http://127.0.0.1:9001/AttackStarted").request().post(Entity.entity(jsonFlow1,MediaType.APPLICATION_JSON),String.class);
-                                System.out.println ("saved:");
-                            } catch (Exception e) {
-                                System.out.println ("Error communicating trigger ATTACK event.");
-                            }
-                        }
-                    };
-                    IntrusionDetectionSystemThread.start();  
-                }
+                if((newFlow.getValue()).getSrcIP().equals("10.0.0.200")||(newFlow.getValue()).getDstIP().equals("10.0.0.200"))continue; 
+
                 // flow filtering
                 if ((!SelectiveFlowSampling((newFlow.getValue()).getTotalFwdPackets(),(newFlow.getValue()).getTotalBackwardPackets()))){}
                 else {
