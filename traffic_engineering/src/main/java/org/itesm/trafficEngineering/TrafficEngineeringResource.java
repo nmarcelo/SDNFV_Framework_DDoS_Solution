@@ -50,7 +50,6 @@ import org.onosproject.net.flow.FlowRule;
 import org.onosproject.net.flow.instructions.*;
 
 
-
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -72,6 +71,12 @@ import org.onosproject.net.topology.TopologyEdge;
 import org.onosproject.net.topology.TopologyVertex;
 import java.lang.Iterable;
 
+/**
+ * Metering
+ */
+import org.onosproject.net.meter.*;
+import java.util.Collections;
+
 
 /**
  * REST API
@@ -82,6 +87,7 @@ public class TrafficEngineeringResource extends AbstractWebResource {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private static final int DROP_RULE_TIMEOUT = 50;
     private static final int FLOW_TIMEOUT = 1000;
+    private static final int METER_RULE_TIMEOUT = 100;
     private static final DeviceId mirrorDeviceID = DeviceId.deviceId("of:0000000000000065");
     private static final PortNumber mirrorPortNumber = PortNumber.portNumber(1);  // can change
 
@@ -1125,6 +1131,113 @@ public class TrafficEngineeringResource extends AbstractWebResource {
 
     }
 
+  /**
+     * POST METERING - Testing
+     *
+     * @param stream input JSON list of metering pairs of hosts.
+     * @return 200 OK
+     */
+    @POST
+    @Path("metering")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response meteringStrategy(InputStream stream) {
+        HostService hostService = get(HostService.class);
+        FlowObjectiveService flowObjectiveService = get(FlowObjectiveService.class);
+        MeterService meterService = get(MeterService.class);
+        CoreService coreService = get(CoreService.class);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        ApplicationId appId = coreService.registerApplication("mx.itesm");
+
+        try {
+
+            ObjectNode rootNode = mapper.createObjectNode();
+
+            ProviderId providerId = new ProviderId("provider.scheme", "provider.id");
+            Map<String, Object> metering_ = mapper.readValue(stream, Map.class);
+
+            if (metering_ == null || metering_.size() == 0) {
+                rootNode.put("response", "No given hosts to add meter");
+                return ok(rootNode).build();
+            }
+
+             for (Map.Entry<String, Object> entry : metering_.entrySet()) {
+                String src = (((Map)entry.getValue()).get("macsrc")).toString();
+                String dst = (((Map)entry.getValue()).get("macdst")).toString();
+                HostId srcId = null;
+                HostId dstId = null;
+                Set<Host> hosts = hostService.getHostsByMac(MacAddress.valueOf(src));
+                if (hosts.isEmpty()) continue;
+                for (Host host: hosts) {
+                    srcId = host.id();
+                }
+                hosts = hostService.getHostsByMac(MacAddress.valueOf(dst));
+                if (hosts.isEmpty()) continue;
+                for (Host host: hosts) {
+                    dstId = host.id();
+                }
+
+                if (srcId == null || dstId == null) continue;
+                
+                // TODO 
+                // Manage meter: search, replace, add, delete
+
+
+                // add meter
+                // type, rate, burst size, 
+                Band b = new DefaultBand(Band.Type.DROP, 600L,30L, (short) 0);
+
+
+                MeterRequest.Builder meterRequestBuilder = DefaultMeterRequest.builder()
+                .forDevice(hostService.getHost(srcId).location().deviceId())
+                .fromApp(appId)
+                .withUnit(Meter.Unit.KB_PER_SEC)
+                .withBands(Collections.singleton(b));
+      
+                MeterRequest request = meterRequestBuilder.add();
+                Meter meter = meterService.submit(request);
+
+                log.info("Requested meter with id {}: {}", meter.id().toString(), meter.toString());
+                // Check existing meters
+                
+
+                // at src device
+                TrafficSelector objectiveSelector1 = DefaultTrafficSelector.builder()
+                        .matchEthSrc(srcId.mac()).matchEthDst(dstId.mac()).build();
+
+                TrafficTreatment meterTreatment = DefaultTrafficTreatment.builder()
+                        .meter(meter.id()).build();
+
+                ForwardingObjective objective1 = DefaultForwardingObjective.builder()
+                        .withSelector(objectiveSelector1)
+                        .withTreatment(meterTreatment)
+                        .fromApp(appId)
+                        .withPriority(101)
+                        .makeTemporary(METER_RULE_TIMEOUT)
+                        .withFlag(ForwardingObjective.Flag.VERSATILE)
+                        .add();
+
+                
+                flowObjectiveService.forward(hostService.getHost(srcId).location().deviceId(),
+                                         objective1);
+
+                log.info("Meter rule installed for: src: {}, dst: {}, Dev : {}", srcId.toString(), dstId.toString(),
+                    hostService.getHost(srcId).location().deviceId().toString());
+
+            }
+
+            rootNode.put("response", "OK");
+            return ok(rootNode).build();
+
+        } catch (Exception e) {
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.toString())
+                    .build();
+        }
+
+    }
 
 
     /**
@@ -1341,7 +1454,7 @@ public class TrafficEngineeringResource extends AbstractWebResource {
     }
 
     /**
-     * Install rule for
+     * Install rule for MTD
      *
      */
 

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1684964464074
+Bnd-LastModified: 1685488719156
 Build-Jdk: 11.0.7
 Built-By: root
 Bundle-ClassPath: WEB-INF/classes
@@ -29,12 +29,13 @@ Import-Package: com.fasterxml.jackson.annotation;version="[2.8,3)",com.f
  g.onosproject.net.flowobjective;version="[2.2,3)",org.onosproject.net.h
  ost;version="[2.2,3)",org.onosproject.net.intent;version="[2.2,3)",org.
  onosproject.net.intent.util;version="[2.2,3)",org.onosproject.net.link;
- version="[2.2,3)",org.onosproject.net.packet;version="[2.2,3)",org.onos
- project.net.provider;version="[2.2,3)",org.onosproject.net.statistic;ve
- rsion="[2.2,3)",org.onosproject.net.topology;version="[2.2,3)",org.onos
- project.rest;version="[2.2,3)",org.onosproject.store.service;version="[
- 2.2,3)",org.osgi.service.component;version="[1.4,2)",org.slf4j;version=
- "[1.7,2)",org.glassfish.jersey.servlet;version="[2.26,3)"
+ version="[2.2,3)",org.onosproject.net.meter;version="[2.2,3)",org.onosp
+ roject.net.packet;version="[2.2,3)",org.onosproject.net.provider;versio
+ n="[2.2,3)",org.onosproject.net.statistic;version="[2.2,3)",org.onospro
+ ject.net.topology;version="[2.2,3)",org.onosproject.rest;version="[2.2,
+ 3)",org.onosproject.store.service;version="[2.2,3)",org.osgi.service.co
+ mponent;version="[1.4,2)",org.slf4j;version="[1.7,2)",org.glassfish.jer
+ sey.servlet;version="[2.26,3)"
 Provide-Capability: osgi.service;objectClass:List<String>="org.itesm.lin
  kDelay.intf.LinkQualityService";uses:="org.itesm.linkDelay.intf",osgi.s
  ervice;objectClass:List<String>="org.itesm.resetConnection.intf.ResetCo
