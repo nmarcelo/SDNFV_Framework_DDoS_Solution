@@ -232,6 +232,12 @@ class StatisticsAndRuleManager(object):
         if reply != '':
             logging.warning(reply)
 
+            
+    def meterCommand(self, metering):
+        # send host for dropping   
+        reply = json_post_req('http://%s:%d/metering' % (ONOS_IP, ONOS_PORT), json.dumps(metering))
+        if reply != '':
+            logging.error(reply)
 
     def removeMTDCommand(self, attacker, shadow_servers):
         # send host to remove dropping rules
