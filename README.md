@@ -60,5 +60,5 @@
 4. The author will try to create a tutorial video that explains the deployment of the system and upload it to youtube. Thereafter, the link will be shared in this instruction file.
 
 ## How to cite this work
-Yungaicela-Naula, N. M., Vargas-Rosales, C., & Perez-Diaz, J. A. (2023).
+Yungaicela-Naula, N. M., Vargas-Rosales, C., & Pérez-Díaz, J. A. (2023). SDN/NFV-based framework for autonomous defense against slow-rate DDoS attacks by using reinforcement learning. Future Generation Computer Systems.
 # SDNFV_Framework_DDoS_Solution
